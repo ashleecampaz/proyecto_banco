@@ -2,7 +2,7 @@ from flask import Flask
 
 from .controlador import rutasCuenta, rutasUsuario, rutasInicio, rutasMovimiento
 
-app = Flask(__name__)
+app = Flask(__name__,template_folder="./vista")
 
 def init_app(config):
     app.config.from_object(config)

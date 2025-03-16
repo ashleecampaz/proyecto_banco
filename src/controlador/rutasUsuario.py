@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, render_template, redirect, url_for
 from flask import request
 from flask import jsonify
 from src.modelo.Usuario import Usuario
@@ -21,6 +21,15 @@ def registrarUsuario():
     return reponse, 500
     
 
+@main.route('/registrar-form',methods=['POST'])
+def registrarUsuarioform():
+    cedula = request.form['cedula']
+    nombre = request.form['nombre']
+    apellido = request.form['apellido']
+    celular =  request.form['celular']
+    
+    resultado = Usuario.registrarUsuario(cedula=cedula, nombre=nombre, apellido=apellido, celular=celular)
+    return redirect(url_for('inicio_blueprint.inicio'))
 
 @main.route('/listar',methods=['GET'])
 def listarUsuarios():

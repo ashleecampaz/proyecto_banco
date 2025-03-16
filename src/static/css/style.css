@@ -1,5 +1,5 @@
-h1{
-    color:rgb(40, 7, 83); 
+h1, .profile-info{
+    color:rgb(224, 219, 230); 
     text-align: center;
 }
 
@@ -13,6 +13,7 @@ header {
 .navbar{
     background-color: #CD5C5C;
 }
+
 body {
     font-family: Arial, sans-serif;
     background-color:#33234d;
@@ -56,7 +57,7 @@ body {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
-    background-color: #FFC0CB;
+    background-color: #e78d9c;
     color: #fff;
     cursor: pointer;
 }
@@ -69,4 +70,9 @@ body {
 /*Side bar*/
 #registro{
     background-color: #ffcccc;
+}
+
+.titulo {
+    color:#CD5C5C;
+    text-align: center;
 }

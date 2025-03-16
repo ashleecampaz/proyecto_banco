@@ -58,6 +58,7 @@ function validarFormulario() {
         alert('Por favor, complete correctamente el formulario.');
         return false; // Bloquea el envío del formulario
     }
+
 }
 
 function validarCamposAlCambiarFoco()
@@ -66,7 +67,7 @@ function validarCamposAlCambiarFoco()
     const inputCedula =  document.getElementById('cedula-usuario');
     const inputNombre= document.getElementById('nombre-usuario');
     const inpuApellido = document.getElementById('apellido-usuario');
-    const inputCelular= document.getElementsByName('celular-usuario');
+    const inputCelular= document.getElementById('celular-usuario');
 
     const labelErrorCedula=document.getElementById('error-cedula');
     const labelErrorNombre=document.getElementById('error-nombre');
@@ -87,4 +88,5 @@ function validaciones(){
 
 
 document.addEventListener('DOMContentLoaded', validaciones);
+
 
