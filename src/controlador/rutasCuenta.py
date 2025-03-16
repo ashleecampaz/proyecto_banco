@@ -42,6 +42,6 @@ def actualizarCuenta(cuenta_id):
 
 @main.route('/eliminar/<int:cuenta_id>', methods=['DELETE'])
 def eliminarCuenta(cuenta_id):
-    respuesta, codigo = eliminarCuenta(cuenta_id)
+    respuesta, codigo = repositorio.eliminarCuenta(cuenta_id)
     return jsonify(respuesta), codigo  
 
