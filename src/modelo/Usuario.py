@@ -26,3 +26,7 @@ class Usuario():
         for us in usuarios:
              usuarios_json.append(us.to_json())
         return usuarios_json
+    @classmethod
+    def consultarUsuario(cls, cedula):
+        usuario = repositorio.consultarUsuario(cedula)
+        return usuario.to_json() if usuario else None

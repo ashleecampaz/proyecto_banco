@@ -25,3 +25,10 @@ def registrarUsuario():
 def listarUsuarios():
    usuarios = Usuario.listarUsuarios()
    return usuarios, 200
+
+@main.route('/consultar/<int:cedula>',methods=['GET'])
+def consultarUsuario(cedula):
+    usuario = Usuario.consultarUsuario(cedula)
+    if usuario:
+        return usuario, 200
+    return jsonify({'message':'Usuario no encontrado'}), 404

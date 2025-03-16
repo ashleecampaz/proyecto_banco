@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 from sqlalchemy.exc import SQLAlchemyError
 from flask import Flask
-
+import random
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///banco.db'
@@ -34,6 +34,14 @@ class Cuenta(db.Model):
 
     usuario_cedula = db.Column(db.Integer, db.ForeignKey('usuario.cedula'))
     movimiento = db.relationship('Movimiento', backref='cuenta', lazy=True, cascade="all, delete-orphan")
+    def to_json(self):
+        return {
+            'cuenta_id': self.cuenta_id,
+            'usuario_cedula':self.usuario_cedula,
+            'monto':self.monto,
+            'estado': self.estado
+        }
+
 
 class Movimiento(db.Model):
     movimiento_id = db.Column(db.Integer, primary_key=True)
@@ -57,15 +65,36 @@ def agregarUsuario(cedula, nombre, apellido, celular):
         except SQLAlchemyError as e:
              db.session.rollback()  # Revierte cambios si hay un error
              return False
+        
 
-
-def agregarCuenta(cedula_usuario):
+def agregarCuenta(cuenta_id,usuario_cedula,monto,estado):
     with app.app_context():
-        cuenta = Cuenta(cedula_usuario= cedula_usuario)
-        db.session.add(cuenta)
-        db.session.commit()
+        try:
+            Usuario_obj = Usuario.query.filter_by(cedula=usuario_cedula).first()
+            if not Usuario_obj:
+                return False
+            cuenta = Cuenta(cuenta_id=cuenta_id,usuario_cedula=usuario_cedula,monto=monto,estado=estado)
+            db.session.add(cuenta)
+            db.session.commit()
+            return True
+        except SQLAlchemyError as e:
+             db.session.rollback()  # Revierte cambios si hay un error
+             return False
+    
 
 def consultarUsuarios():
     with app.app_context():
         padres = Usuario.query.all()
         return padres
+def consultarUsuario(cedula):
+    with app.app_context():
+        usuario = Usuario.query.filter_by(cedula=cedula).first()
+        return usuario
+def consultarCuentas(cedula):
+    with app.app_context():
+        cuentas = Cuenta.query.filter_by(usuario_cedula=cedula).all()
+        return cuentas
+def consultarCuenta(cuenta_id):
+    with app.app_context():
+        cuenta = Cuenta.query.filter_by(cuenta_id=cuenta_id).first()
+        return cuenta
