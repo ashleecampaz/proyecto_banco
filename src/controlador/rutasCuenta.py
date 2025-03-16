@@ -2,6 +2,7 @@ from flask import request
 from flask import jsonify
 from src.modelo.Usuario import Usuario
 from src.modelo.Cuenta import Cuenta
+from ..datos import repositorio
 from flask import Blueprint
 
 main = Blueprint('cuentas_blueprint',__name__)
@@ -31,5 +32,16 @@ def consultarCuenta(cuenta_id):
         return cuenta, 200
     return jsonify({'message':'Cuenta no encontrada'}), 404
 
-    
+@main.route('/actualizar/<int:cuenta_id>', methods=['PUT'])
+def actualizarCuenta(cuenta_id):
+    data = request.json
+    resultado = repositorio.actualizarCuenta(cuenta_id, data.get("estado"), data.get("monto"))
+    if resultado:
+        return jsonify({"mensaje": "Cuenta actualizada correctamente"}), 200
+    return jsonify({"error": "Cuenta no encontrada"}), 404
+
+@main.route('/eliminar/<int:cuenta_id>', methods=['DELETE'])
+def eliminarCuenta(cuenta_id):
+    respuesta, codigo = eliminarCuenta(cuenta_id)
+    return jsonify(respuesta), codigo  
 
