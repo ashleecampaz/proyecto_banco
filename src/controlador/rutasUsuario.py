@@ -57,7 +57,7 @@ def consultarUsuarioform():
 @main.route('/actualizar/<int:cedula>', methods=['PUT'])
 def actualizarUsuario(cedula):
     data = request.json
-    resultado = repositorio.actualizarUsuario(cedula, data.get("nombre"), data.get("apellido"), data.get("celular"))
+    resultado = Usuario.actualizarUsuario(cedula, data.get("nombre"), data.get("apellido"), data.get("celular"))
     if resultado:
         return jsonify({"mensaje": "Usuario actualizado correctamente"}), 200
     return jsonify({"error": "Usuario no encontrado"}), 404
@@ -75,7 +75,7 @@ def actualizarUsuarioform():
     apellido = request.form['apellido']
     celular =  request.form['celular']
 
-    resultado = repositorio.actualizarUsuario(cedula, nombre=nombre, apellido=apellido, celular=celular)
+    resultado = Usuario.actualizarUsuario(cedula, nombre=nombre, apellido=apellido, celular=celular)
     if resultado:
         mensaje = "El usuario fue actualizado correctamente"
     else:  
@@ -84,14 +84,14 @@ def actualizarUsuarioform():
 
 @main.route('/eliminar/<int:cedula>', methods=['DELETE'])
 def eliminarUsuario(cedula):
-    resultado = repositorio.eliminarUsuario(cedula)
+    resultado = Usuario.eliminarUsuario(cedula)
     if resultado:
         return jsonify({"mensaje": "Usuario eliminado correctamente"}), 200
     return jsonify({"error": "Usuario no encontrado"}), 404
 
 @main.route('/eliminar', methods=['POST'])
 def eliminarUsuarioform(cedula):
-    resultado = repositorio.eliminarUsuario(cedula)
+    resultado = Usuario.eliminarUsuario(cedula)
     if resultado:
         mensaje = "el usuario fue eliminado correctamente"
     else:

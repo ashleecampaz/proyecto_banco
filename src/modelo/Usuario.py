@@ -30,3 +30,11 @@ class Usuario():
     def consultarUsuario(cls, cedula):
         usuario = repositorio.consultarUsuario(cedula)
         return usuario.to_json() if usuario else None
+    @classmethod
+    def actualizarUsuario(cls, cedula, nombre=None, apellido=None, celular=None):
+        exito = repositorio.actualizarUsuario(cedula, nombre, apellido, celular)
+        return {'mensaje': 'Usuario actualizado exitosamente'} if exito else {'error': 'Usuario no encontrado'}
+    @classmethod
+    def eliminarUsuario(cls, cedula):
+        exito = repositorio.eliminarUsuario(cedula)
+        return {'mensaje': 'Usuario eliminado exitosamente'} if exito else {'error': 'Usuario no encontrado'}    

@@ -57,13 +57,13 @@ def consultarCuenta(cuenta_id):
 @main.route('/actualizar/<int:cuenta_id>', methods=['PUT'])
 def actualizarCuenta(cuenta_id):
     data = request.json
-    resultado = repositorio.actualizarCuenta(cuenta_id, data.get("estado"), data.get("monto"))
+    resultado = Cuenta.actualizarCuenta(cuenta_id, data.get("estado"), data.get("monto"))
     if resultado:
         return jsonify({"mensaje": "Cuenta actualizada correctamente"}), 200
     return jsonify({"error": "Cuenta no encontrada"}), 404
 
 @main.route('/eliminar/<int:cuenta_id>', methods=['DELETE'])
 def eliminarCuenta(cuenta_id):
-    respuesta, codigo = repositorio.eliminarCuenta(cuenta_id)
+    respuesta, codigo = Cuenta.eliminarCuenta(cuenta_id)
     return jsonify(respuesta), codigo  
 

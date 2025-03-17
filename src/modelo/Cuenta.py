@@ -38,3 +38,11 @@ class Cuenta():
     def consultarCuenta(cls, cuenta_id):
         cuenta = repositorio.consultarCuenta(cuenta_id)
         return cuenta.to_json() if cuenta else None
+    @classmethod
+    def actualizarCuenta(cls, cuenta_id, estado=None, monto=None):
+        exito = repositorio.actualizarCuenta(cuenta_id, estado, monto)
+        return {'mensaje': 'Cuenta actualizada exitosamente'} if exito else {'error': 'Cuenta no encontrada'}
+    @classmethod
+    def eliminarCuenta(cls, cuenta_id):
+        resultado, status_code = repositorio.eliminarCuenta(cuenta_id)
+        return resultado, status_code

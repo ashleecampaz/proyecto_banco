@@ -40,3 +40,11 @@ class Movimiento():
     def consultarMovimiento(cls, movimiento_id):
         movimiento = repositorio.consultarMovimiento(movimiento_id)
         return movimiento.to_json() if movimiento else None
+        @classmethod
+    @classmethod
+    def actualizarMovimiento(cls, movimiento_id, tipo=None, monto=None):
+        exito = repositorio.actualizarMovimiento(movimiento_id, tipo, monto)
+        return {'mensaje': 'Movimiento actualizado exitosamente'} if exito else {'error': 'Movimiento no encontrado'}
+    def eliminarMovimiento(cls, movimiento_id):
+        exito = repositorio.eliminarMovimiento(movimiento_id)
+        return {'mensaje': 'Movimiento eliminado exitosamente'} if exito else {'error': 'Movimiento no encontrado'}

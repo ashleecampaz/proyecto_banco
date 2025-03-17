@@ -36,14 +36,14 @@ def consultarMovimiento(movimiento_id):
 @main.route('/actualizar/<int:movimiento_id>', methods=['PUT'])
 def actualizarMovimiento(movimiento_id):
     data = request.json
-    resultado = repositorio.actualizarMovimiento(movimiento_id, data.get("tipo"), data.get("monto"))
+    resultado = Movimiento.actualizarMovimiento(movimiento_id, data.get("tipo"), data.get("monto"))
     if resultado:
         return jsonify({"mensaje": "Movimiento actualizado correctamente"}), 200
     return jsonify({"error": "Movimiento no encontrado"}), 404
 
 @main.route('/eliminar/<int:movimiento_id>', methods=['DELETE'])
 def eliminarMovimiento(movimiento_id):
-    resultado = repositorio.eliminarMovimiento(movimiento_id)
+    resultado = Movimiento.eliminarMovimiento(movimiento_id)
     if resultado:
         return jsonify({"mensaje": "Movimiento eliminado correctamente"}), 200
     return jsonify({"error": "Movimiento no encontrado"}), 404
