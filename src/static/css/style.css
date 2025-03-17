@@ -76,3 +76,6 @@ body {
     color:#CD5C5C;
     text-align: center;
 }
+#boton-guardar,#boton-eliminar {
+    margin: 10px;
+}

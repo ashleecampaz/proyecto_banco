@@ -6,15 +6,11 @@ main = Blueprint('inicio_blueprint',__name__)
 
 @main.route('/Banco')
 def inicio():
-    reponse = jsonify({'message':'Success'})
     usuarios = Usuario.listarUsuarios()
-    cadena_usuarios =[]
-    for us in usuarios:
-        cadena_usuarios.append(f"{us["nombre"]} {us["apellido"]}")
-    return render_template('index.html',usuarios = cadena_usuarios)
+    return render_template('index.html',usuarios = usuarios)
 
 
 @main.route('/consultar')
 def consultarUsuarioform():
     mensaje = ""
-    return render_template("usuarios.html", mensaje = mensaje)
+    return render_template("usuarios.html", mensaje = mensaje, inactivo =True)

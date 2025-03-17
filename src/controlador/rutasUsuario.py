@@ -50,9 +50,9 @@ def consultarUsuarioform():
     if usuario:
         mensaje = "El usuario fue encontrado!"
         return render_template("usuarios.html",nombre = usuario["nombre"], apellido= usuario["apellido"],
-                               celular = usuario["celular"], cedula=usuario["cedula"], mensaje = mensaje)
+                               celular = usuario["celular"], cedula=usuario["cedula"], mensaje = mensaje, inactivo=False)
     mensaje = "El usuario no fue encontrado"
-    return render_template("usuarios.html", mensaje = mensaje)
+    return render_template("usuarios.html", mensaje = mensaje, inactivo=True)
 
 @main.route('/actualizar/<int:cedula>', methods=['PUT'])
 def actualizarUsuario(cedula):
@@ -64,7 +64,13 @@ def actualizarUsuario(cedula):
 
 @main.route('/actualizar-usuario', methods=['POST'])
 def actualizarUsuarioform():
+
+    accion = request.form.get("accion")
+  
     cedula = request.form['cedula']
+    if accion == "eliminar":
+        
+        return eliminarUsuarioform(cedula)
     nombre = request.form['nombre']
     apellido = request.form['apellido']
     celular =  request.form['celular']
@@ -72,8 +78,9 @@ def actualizarUsuarioform():
     resultado = repositorio.actualizarUsuario(cedula, nombre=nombre, apellido=apellido, celular=celular)
     if resultado:
         mensaje = "El usuario fue actualizado correctamente"
-    mensaje = "El usuario no fue actualizado"
-    return render_template("usuarios.html", mensaje = mensaje)
+    else:  
+        mensaje = "El usuario no fue actualizado"
+    return render_template("usuarios.html", mensaje = mensaje, inactivo=True)
 
 @main.route('/eliminar/<int:cedula>', methods=['DELETE'])
 def eliminarUsuario(cedula):
@@ -81,3 +88,12 @@ def eliminarUsuario(cedula):
     if resultado:
         return jsonify({"mensaje": "Usuario eliminado correctamente"}), 200
     return jsonify({"error": "Usuario no encontrado"}), 404
+
+@main.route('/eliminar', methods=['POST'])
+def eliminarUsuarioform(cedula):
+    resultado = repositorio.eliminarUsuario(cedula)
+    if resultado:
+        mensaje = "el usuario fue eliminado correctamente"
+    else:
+        mensaje = "El usuario no fue eliminado"
+    return render_template("usuarios.html", mensaje = mensaje, inactivo=True)

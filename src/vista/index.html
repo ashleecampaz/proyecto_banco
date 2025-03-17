@@ -90,13 +90,24 @@
         </div>
 
         <!-- Contenido Principal -->
-        <main id="Usuarios" class="col-12 col-sm-9 col-md-7">
+        <main id="Usuarios" class="col-12 col-sm-9 col-md-7 align-items-center">
           <h2 class="mt-3 titulo">Usuarios</h2>
-          <ul class="list-group">
-            {% for us in usuarios %}
-              <li  class="list-group-item">{{us}} </li>
-            {% endfor %}
-          </ul>
+          <table  class=" table table-bordered"> 
+            <thead> 
+                <tr> 
+                    <th> Cedula</th>
+                    <th> Nombre </th>
+                </tr>
+            </thead>
+            <tbody> 
+              {% for us in usuarios %}
+                <tr> 
+                    <td> {{us.cedula}} </td>
+                    <td> {{ us.nombre}}  {{us.apellido}}</td>
+                </tr>
+               {% endfor %} 
+            </tbody>
+         </table>
         </main>
       </div>
 

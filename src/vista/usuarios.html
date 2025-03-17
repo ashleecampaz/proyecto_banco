@@ -73,30 +73,35 @@
 
         <!-- Contenido Principal -->
         <main id="Usuarios" class="col-12 col-sm-9 col-md-7">
-          <h2 class="mt-3 titulo">Edicion</h2>
+          <h2 class="mt-3 titulo">Informacion de usuario</h2>
           <form id="formulario-usuario"class="formulario" method="post" action="{{url_for('usuario_blueprint.actualizarUsuarioform')}}"> 
-            <label for="cedula-usuario-edicion"> * Cedula:</label>
-            <input readonly type="text" id="cedula-usuario-edicion" name="cedula" placeholder="Ingrese su cedula" value="{{ cedula | default('')}}">
-            <br>
-
-            <label for="nombre-usuario"> * Nombre:</label>
-            <input type="text" id="nombre-usuario" name="nombre" placeholder="Ingrese su nombre" value="{{ nombre | default('')}}">
-            <br>
-            <label for="nombre-usuario" class="error" id="error-nombre"> </label>
-            <br>
-
-            <label for="apellido-usuario"> * Apellido:</label>
-            <input type="text" id="apellido-usuario" name="apellido" placeholder="Ingrese su apellido" value="{{ apellido | default('')}}">
-            <br>
-            <label for="apellido-usuario" class="error" id="error-apellido"> </label>
-            <br>
-
-            <label for="celular-usuario"> * Celular:</label>
-            <input type="text" id="celular-usuario" name="celular" placeholder="Ingrese su numero celular" value="{{ celular | default('')}}">
-            <br>
-            <label for="celular-usuario" class="error" id="error-celular"> </label>
-            <br>
-            <button id="boton-guardar" type="submit"> Guardar cambios</button>
+            <fieldset {% if inactivo %}disabled{% endif %} > 
+              <label for="cedula-usuario-edicion"> * Cedula:</label>
+              <input readonly type="text" id="cedula-usuario-edicion" name="cedula" placeholder="Ingrese su cedula" value="{{ cedula | default('')}}">
+              <br>
+  
+              <label for="nombre-usuario"> * Nombre:</label>
+              <input type="text" id="nombre-usuario" name="nombre" placeholder="Ingrese su nombre" value="{{ nombre | default('')}}">
+              <br>
+              <label for="nombre-usuario" class="error" id="error-nombre"> </label>
+              <br>
+  
+              <label for="apellido-usuario"> * Apellido:</label>
+              <input type="text" id="apellido-usuario" name="apellido" placeholder="Ingrese su apellido" value="{{ apellido | default('')}}">
+              <br>
+              <label for="apellido-usuario" class="error" id="error-apellido"> </label>
+              <br>
+  
+              <label for="celular-usuario"> * Celular:</label>
+              <input type="text" id="celular-usuario" name="celular" placeholder="Ingrese su numero celular" value="{{ celular | default('')}}">
+              <br>
+              <label for="celular-usuario" class="error" id="error-celular"> </label>
+              <br>
+              <div class="row">
+                <button class= "col-md-3" id="boton-guardar" type="submit" name="accion" value="guardar"> Guardar cambios</button>
+                <button class= "col-md-3" id="boton-eliminar" type="submit" name="accion" value="eliminar"> Eliminar</button>
+              </div>
+            </fieldset>             
           </form>
         </main>
       </div>
