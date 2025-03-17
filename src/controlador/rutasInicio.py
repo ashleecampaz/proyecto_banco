@@ -14,3 +14,8 @@ def inicio():
 def consultarUsuarioform():
     mensaje = ""
     return render_template("usuarios.html", mensaje = mensaje, inactivo =True)
+
+@main.route('/consultar-cuentas')
+def consultarCuentasUsuarioform():
+    mensaje = ""
+    return render_template("cuentas.html", mensaje = mensaje, cuentas=[], usuario = '')

@@ -61,7 +61,7 @@
         
         <div id="registro" class="col-12 col-sm-3 col-md-5 p-3 ">
           <h4>Consultar usuario</h4>
-          <form id="formulario-consulta"class="formulario" method="post" action="{{url_for('usuario_blueprint.consultarUsuarioform')}}"> 
+          <form id="formulario-consulta"class="formulario" method="post" action="{{url_for('cuentas_blueprint.listarCuentasform')}}"> 
             <label for="cedula-usuario"> * Cedula:</label>
             <input type="text" id="cedula-usuario" name="cedula" placeholder="Ingrese su cedula">
             <br>
@@ -73,42 +73,53 @@
 
         <!-- Contenido Principal -->
         <main id="Usuarios" class="col-12 col-sm-9 col-md-7">
-          <h2 class="mt-3 titulo">Informacion de usuario</h2>
-          <form id="formulario-edicion"class="formulario" method="post" action="{{url_for('usuario_blueprint.actualizarUsuarioform')}}"> 
-            <fieldset {% if inactivo %}disabled{% endif %} > 
-              <label for="cedula-usuario-edicion"> * Cedula:</label>
-              <input readonly type="text" id="cedula-usuario-edicion" name="cedula" placeholder="Ingrese su cedula" value="{{ cedula | default('')}}">
-              <br>
-  
-              <label for="nombre-usuario"> * Nombre:</label>
-              <input type="text" id="nombre-usuario" name="nombre" placeholder="Ingrese su nombre" value="{{ nombre | default('')}}">
-              <br>
-              <label for="nombre-usuario" class="error" id="error-nombre"> </label>
-              <br>
-  
-              <label for="apellido-usuario"> * Apellido:</label>
-              <input type="text" id="apellido-usuario" name="apellido" placeholder="Ingrese su apellido" value="{{ apellido | default('')}}">
-              <br>
-              <label for="apellido-usuario" class="error" id="error-apellido"> </label>
-              <br>
-  
-              <label for="celular-usuario"> * Celular:</label>
-              <input type="text" id="celular-usuario" name="celular" placeholder="Ingrese su numero celular" value="{{ celular | default('')}}">
-              <br>
-              <label for="celular-usuario" class="error" id="error-celular"> </label>
-              <br>
-              <div class="row">
-                <button class= "col-md-3" id="boton-guardar" type="submit" name="accion" value="guardar"> Guardar cambios</button>
-                <button class= "col-md-3" id="boton-eliminar" type="submit" name="accion" value="eliminar"> Eliminar</button>
-              </div>
-            </fieldset>             
-          </form>
+          <h2 class="mt-3 titulo">Cuentas</h2>
+          {% if usuario != ''%}
+          <p> Nombre: {{usuario.nombre | default('')}} {{usuario.apellido | default('')}}</p>
+          <p> Cedula: {{usuario.cedula | default('')}}</p>
+          {% endif %}
+          <table  class=" table table-bordered"> 
+            <thead> 
+                <tr> 
+                    <th> id-cuenta</th>
+                    <th> Monto </th>
+                </tr>
+            </thead>
+            <tbody> 
+              {% for cu in cuentas %}
+                <tr> 
+                    <td> {{cu.cuenta_id}} </td>
+                    <td> {{ cu.monto}} </td>
+                </tr>
+               {% endfor %} 
+            </tbody>
+         </table>
+         <button class= "col-md-3" id="boton-agregar" type="button" data-bs-toggle="modal" data-bs-target="#modal-registro"> Agregar</button>
         </main>
       </div>
 
     </div>
   </section>
+  <!-- Ventanas modales-->
+  <div class="modal fade modal-zoom" id="modal-registro" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-agregacion">Agregar cuenta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body text-center">
+          <form class = "formulario" method="post" action="{{url_for('cuentas_blueprint.registrarCuentaform',cedula=usuario.cedula or 0)}}"> 
+            <label for="monto-cuenta"> * Monto:</label>
+            <input type="text" id="monto-cuenta" name="monto" placeholder="Ingrese un monto">
+            <br>
 
+            <button id="boton-agregar-cuenta" type="submit"> Agregar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
