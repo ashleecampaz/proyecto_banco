@@ -43,6 +43,17 @@ def consultarUsuario(cedula):
         return usuario, 200
     return jsonify({'message':'Usuario no encontrado'}), 404
 
+@main.route('/consultar-usuario',methods=['POST'])
+def consultarUsuarioform():
+    cedula = request.form['cedula']
+    usuario = Usuario.consultarUsuario(cedula)
+    if usuario:
+        mensaje = "El usuario fue encontrado!"
+        return render_template("usuarios.html",nombre = usuario["nombre"], apellido= usuario["apellido"],
+                               celular = usuario["celular"], cedula=usuario["cedula"], mensaje = mensaje)
+    mensaje = "El usuario no fue encontrado"
+    return render_template("usuarios.html", mensaje = mensaje)
+
 @main.route('/actualizar/<int:cedula>', methods=['PUT'])
 def actualizarUsuario(cedula):
     data = request.json
@@ -50,6 +61,19 @@ def actualizarUsuario(cedula):
     if resultado:
         return jsonify({"mensaje": "Usuario actualizado correctamente"}), 200
     return jsonify({"error": "Usuario no encontrado"}), 404
+
+@main.route('/actualizar-usuario', methods=['POST'])
+def actualizarUsuarioform():
+    cedula = request.form['cedula']
+    nombre = request.form['nombre']
+    apellido = request.form['apellido']
+    celular =  request.form['celular']
+
+    resultado = repositorio.actualizarUsuario(cedula, nombre=nombre, apellido=apellido, celular=celular)
+    if resultado:
+        mensaje = "El usuario fue actualizado correctamente"
+    mensaje = "El usuario no fue actualizado"
+    return render_template("usuarios.html", mensaje = mensaje)
 
 @main.route('/eliminar/<int:cedula>', methods=['DELETE'])
 def eliminarUsuario(cedula):

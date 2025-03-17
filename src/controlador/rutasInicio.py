@@ -13,11 +13,8 @@ def inicio():
         cadena_usuarios.append(f"{us["nombre"]} {us["apellido"]}")
     return render_template('index.html',usuarios = cadena_usuarios)
 
-@main.route('/Usuarios')
-def usuarios():
-    reponse = jsonify({'message':'Success'})
-    us = Usuario.consultarUsuario(cedula)
-    cadena_usuarios =[]
-    for us in usuarios:
-        cadena_usuarios.append(f"{us["nombre"]} {us["apellido"]}")
-    return render_template('index.html',usuarios = cadena_usuarios)
+
+@main.route('/consultar')
+def consultarUsuarioform():
+    mensaje = ""
+    return render_template("usuarios.html", mensaje = mensaje)
